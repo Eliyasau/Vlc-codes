@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <vlc/vlc.h>
+
+int main(int argc, char* argv[]) {
+    // Initialize libVLC
+    libvlc_instance_t *vlc_instance;
+    libvlc_media_player_t *media_player;
+
+    const char *media_file_path = "/path/to/your/media/file.mp4";
+
+    // Create a new libVLC instance
+    vlc_instance = libvlc_new(0, NULL);
+
+    // Create a media player playing environement
+    media_player = libvlc_media_player_new(vlc_instance);
+
+    // Create a media from the file path
+    libvlc_media_t *media = libvlc_media_new_path(vlc_instance, media_file_path);
+
+    // Set media to media player
+    libvlc_media_player_set_media(media_player, media);
+
+    // Play the media
+    libvlc_media_player_play(media_player);
+
+    // Wait for playback to finish (optional)
+    // while (libvlc_media_player_is_playing(media_player)) {}
+
+    // Alternatively, you can use a loop to allow user interaction while the video is playing
+    // while (1) {}
+
+    // Release resources
+    libvlc_media_release(media);
+    libvlc_media_player_release(media_player);
+    libvlc_release(vlc_instance);
+
+    return 0;
+}
